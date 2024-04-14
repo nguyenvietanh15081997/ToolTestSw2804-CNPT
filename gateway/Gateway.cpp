@@ -392,9 +392,6 @@ int Gateway::OnSocketStart(Json::Value &reqValue, Json::Value &respValue)
 		reqValue.isMember("queryData") && reqValue["queryData"].isArray() &&
 		reqValue.isMember("reqType") && reqValue["reqType"].isString())
 	{
-		// SocketProtocol::mtxSendMessage.lock();
-		// SocketProtocol::listMessages.clear();
-		// SocketProtocol::mtxSendMessage.unlock();
 
 		Json::Value queryDataJson = reqValue["queryData"];
 		Json::Value queryAddrJson = reqValue["queryAddr"];
