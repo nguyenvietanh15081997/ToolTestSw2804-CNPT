@@ -89,8 +89,8 @@ Json::Value Gateway::SocketCmdStartCheck(Json::Value &dataRspLocal)
 	{
 		// PushLocalResult(dataRspLocal);
 	}
-	// addrDevTesting = bleProtocol->addrDevTesting;
-	addrDevTesting = 6; // TODO : test
+	addrDevTesting = bleProtocol->addrDevTesting;
+	// addrDevTesting = 65535; // TODO : test
 	result = msgReqButtonCheck;
 	return result;
 }

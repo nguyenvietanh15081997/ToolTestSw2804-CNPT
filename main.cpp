@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	string mac = "11:22:33:44:55:66";
 	LOGI("mac: %s", mac.c_str());
 
-	gateway = new Gateway(mac, 9760, "192.168.63.51", "localhost", 1883, "client_id", "RD", "1", 10);
+	gateway = new Gateway(mac, 9760, "192.168.2.13", "localhost", 1883, "client_id", "RD", "1", 10);
 	// gateway = new Gateway(mac, 8080, "127.0.0.1", "localhost", 1883, "client_id", "RD", "1", 10);
 	gateway->init();
 
