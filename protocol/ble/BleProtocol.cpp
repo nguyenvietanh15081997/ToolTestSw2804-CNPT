@@ -285,6 +285,7 @@ void BleProtocol::CheckOpcodeException(message_rsp_st *message_rsp)
 		{
 			
 			addrDevTesting = data_message->dev_addr;
+			LOGW("addrDevTesting: %d", addrDevTesting);
 			// ControlRgbSwitch(addrDevTesting, 255, 255, 0, 0, 100, 20);
 			// ControlRgbSwitch(addrDevTesting, 255, 0, 0, 255, 100, 20);
 			// setAddrDevTesting(data_message->dev_addr);
@@ -3204,7 +3205,7 @@ int BleProtocol::AddDeviceToRoom(uint16_t devAddr, uint16_t roomAddr)
 	return CODE_ERROR;
 }
 
-int BleProtocol::ControlRgbSwitch(uint16_t devAddr, uint8_t button, uint8_t b, uint8_t g, uint8_t r, uint8_t dimOn, uint8_t dimOff)
+int BleProtocol::ControlRgbSwitch(uint16_t devAddr, uint8_t button, uint8_t b, uint8_t g, uint8_t r, uint8_t dimOn, uint8_t dimOff, uint32_t timeout)
 {
 	LOGD("ControlRgbSwitch 0x%04X, button %d, r %d, g %d, b %d, dimon %d, dimOff %d", devAddr, button, r, g, b, dimOn, dimOff);
 	uint8_t dataRsp[100];
@@ -3238,7 +3239,7 @@ int BleProtocol::ControlRgbSwitch(uint16_t devAddr, uint8_t button, uint8_t b, u
 	controlrgb_switch_message.r = r;
 	controlrgb_switch_message.dimOn = dimOn;
 	controlrgb_switch_message.dimOff = dimOff;
-	int rs = SendMessage(APP_REQ, (uint8_t *)&controlrgb_switch_message, sizeof(controlrgb_switch_message_t), HCI_GATEWAY_RSP_OP_CODE, dataRsp, &lenRsp, 1000, controlRgbSwitchHeader, 0, 7);
+	int rs = SendMessage(APP_REQ, (uint8_t *)&controlrgb_switch_message, sizeof(controlrgb_switch_message_t), HCI_GATEWAY_RSP_OP_CODE, dataRsp, &lenRsp, timeout, controlRgbSwitchHeader, 0, 7);
 	if (rs == CODE_OK)
 	{
 		typedef struct __attribute__((packed))

@@ -82,9 +82,10 @@ void Gateway::InitSocketMessage()
 
 Json::Value Gateway::SocketCmdStartCheck(Json::Value &dataRspLocal)
 {
+	LOGW("start check");
 	Json::Value result = Json::objectValue;
 	bleProtocol->SetOnOffLight(65535, 0, 0, false);
-	bleProtocol->ControlRgbSwitch(65535, 255, 0, 0, 255, 100, 20);
+	bleProtocol->ControlRgbSwitch(65535, 255, 0, 0, 255, 100, 20, 400);
 	if (bleProtocol->addrDevTesting != addrDevTesting) // dang test thiet bi cu
 	{
 		// PushLocalResult(dataRspLocal);
@@ -97,50 +98,50 @@ Json::Value Gateway::SocketCmdStartCheck(Json::Value &dataRspLocal)
 
 Json::Value Gateway::ButttonTest(Json::Value &dataRspLocal, int buttonId)
 {
-	if (checkTypeError(addrDevTesting) == 0 && (buttonId == 1 || buttonId == 3)) // touch 13
-	{
-		if (buttonId == 1)
-		{
-			dataRspLocal["touch1"] = -1;
-			dataRspLocal["load1"] = -1;
-			dataRspLocal["rgb1"] = bleProtocol->ControlRgbSwitch(addrDevTesting, 0, 128, 255, 0, 100, 20);
-		}
-		else if (buttonId == 3)
-		{
-			dataRspLocal["touch3"] = -1;
-			dataRspLocal["load3"] = -1;
-			dataRspLocal["rgb3"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 2, 0, 128, 255, 0, 100, 20);
-		}
-	}
-	else if (checkTypeError(addrDevTesting) == 1 && (buttonId == 2 || buttonId == 4)) // touch 24
-	{
-		if (buttonId == 2)
-		{
-			dataRspLocal["touch2"] = -1;
-			dataRspLocal["load2"] = -1;
-			dataRspLocal["rgb2"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 1, 0, 128, 255, 0, 100, 20);
-		}
-		else if (buttonId == 4)
-		{
-			dataRspLocal["touch4"] = -1;
-			dataRspLocal["load4"] = -1;
-			dataRspLocal["rgb4"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 3, 0, 128, 255, 0, 100, 20);
-		}
-	}
-	else if (checkTypeError(addrDevTesting) == 2 && buttonId == 4) // rgb4
-	{
-		dataRspLocal["touch4"] = bleProtocol->SetOnOffLight(addrDevTesting + 3, 1, 0, true);
-		dataRspLocal["load4"] = dataRspLocal["touch4"];
-		dataRspLocal["rgb4"] = -1;
-	}
-	else if (checkTypeError(addrDevTesting) == 3 && (buttonId == 3 || buttonId == 4)) // rgb34
-	{
-	}
-	else if (checkTypeError(addrDevTesting) == 4 && (buttonId == 2 || buttonId == 3 || buttonId == 4)) // rgb234
-	{
-	}
-	else
-	{
+	// if (checkTypeError(addrDevTesting) == 0 && (buttonId == 1 || buttonId == 3)) // touch 13
+	// {
+	// 	if (buttonId == 1)
+	// 	{
+	// 		dataRspLocal["touch1"] = -1;
+	// 		dataRspLocal["load1"] = -1;
+	// 		dataRspLocal["rgb1"] = bleProtocol->ControlRgbSwitch(addrDevTesting, 0, 128, 255, 0, 100, 20);
+	// 	}
+	// 	else if (buttonId == 3)
+	// 	{
+	// 		dataRspLocal["touch3"] = -1;
+	// 		dataRspLocal["load3"] = -1;
+	// 		dataRspLocal["rgb3"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 2, 0, 128, 255, 0, 100, 20);
+	// 	}
+	// }
+	// else if (checkTypeError(addrDevTesting) == 1 && (buttonId == 2 || buttonId == 4)) // touch 24
+	// {
+	// 	if (buttonId == 2)
+	// 	{
+	// 		dataRspLocal["touch2"] = -1;
+	// 		dataRspLocal["load2"] = -1;
+	// 		dataRspLocal["rgb2"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 1, 0, 128, 255, 0, 100, 20);
+	// 	}
+	// 	else if (buttonId == 4)
+	// 	{
+	// 		dataRspLocal["touch4"] = -1;
+	// 		dataRspLocal["load4"] = -1;
+	// 		dataRspLocal["rgb4"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 3, 0, 128, 255, 0, 100, 20);
+	// 	}
+	// }
+	// else if (checkTypeError(addrDevTesting) == 2 && buttonId == 4) // rgb4
+	// {
+	// 	dataRspLocal["touch4"] = bleProtocol->SetOnOffLight(addrDevTesting + 3, 1, 0, true);
+	// 	dataRspLocal["load4"] = dataRspLocal["touch4"];
+	// 	dataRspLocal["rgb4"] = -1;
+	// }
+	// else if (checkTypeError(addrDevTesting) == 3 && (buttonId == 3 || buttonId == 4)) // rgb34
+	// {
+	// }
+	// else if (checkTypeError(addrDevTesting) == 4 && (buttonId == 2 || buttonId == 3 || buttonId == 4)) // rgb234
+	// {
+	// }
+	// else
+	// {
 		if (buttonId == 1)
 		{
 			dataRspLocal["touch1"] = bleProtocol->SetOnOffLight(addrDevTesting, 1, 0, true);
@@ -165,7 +166,7 @@ Json::Value Gateway::ButttonTest(Json::Value &dataRspLocal, int buttonId)
 			dataRspLocal["load4"] = dataRspLocal["touch4"];
 			dataRspLocal["rgb4"] = bleProtocol->ControlRgbSwitch(addrDevTesting + 3, 0, 128, 255, 0, 100, 20);
 		}
-	}
+	// }
 	return msgReqButtonCheck;
 }
 
